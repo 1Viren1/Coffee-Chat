@@ -4,9 +4,438 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MSc Marketing Coffee Chat</title>
-  <style>/* styles same as provided earlier */</style>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:rgba(255,255,255,0.08);
+      --card2:rgba(255,255,255,0.06);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.72);
+      --line:rgba(255,255,255,0.14);
+      --btn:rgba(255,255,255,0.14);
+      --btn2:rgba(255,255,255,0.10);
+      --good:#7CFFB2;
+      --bad:#FF8A8A;
+      --shadow:0 20px 60px rgba(0,0,0,0.45);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 600px at 20% 10%, rgba(120,120,255,0.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(0,255,210,0.18), transparent 60%),
+        radial-gradient(900px 700px at 45% 100%, rgba(255,170,80,0.14), transparent 55%),
+        var(--bg);
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .wrap{width:100%;max-width:860px;}
+
+    .topbar{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .brand{display:flex;flex-direction:column;gap:6px;min-width:0;}
+
+    h1{margin:0;font-size:28px;letter-spacing:0.2px;word-break:break-word;}
+
+    .desc{margin:0;color:var(--muted);font-size:14px;line-height:1.45;}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--btn2);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      transition:transform 0.08s ease, background 0.12s ease;
+      white-space:nowrap;
+    }
+
+    .btn:active{transform:scale(0.99);}
+    .btn:hover{background:var(--btn);}
+
+    .card{
+      background:linear-gradient(180deg,var(--card),var(--card2));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .sectionTitle{margin:0 0 10px 0;font-size:16px;color:rgba(255,255,255,0.88);}
+
+    label{font-size:13px;color:var(--muted);display:block;margin-top:10px;margin-bottom:6px;}
+
+    input{
+      width:100%;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.08);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:12px;
+      font-size:15px;
+      outline:none;
+    }
+
+    input::placeholder{color:rgba(255,255,255,0.45);}
+
+    .primary{
+      width:100%;
+      justify-content:center;
+      background:rgba(255,255,255,0.18);
+      border:1px solid rgba(255,255,255,0.22);
+      margin-top:12px;
+    }
+
+    .primary:hover{background:rgba(255,255,255,0.22);}
+
+    .disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
+
+    .message{margin-top:10px;font-size:13px;color:var(--muted);min-height:18px;}
+    .message.ok{color:var(--good);}
+    .message.bad{color:var(--bad);}
+
+    .pillGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    @media (max-width:560px){
+      h1{font-size:24px;}
+      .pillGrid{grid-template-columns:1fr;}
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.08);
+      border-radius:999px;
+      padding:10px 12px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .pill strong{color:var(--text);font-weight:600;}
+
+    .groups{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    @media (min-width:900px){
+      .groups{grid-template-columns:1fr 1fr;}
+    }
+
+    .groupCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.07);
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .groupHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .groupHead strong{font-size:14px;}
+    .count{font-size:12px;color:var(--muted);}
+
+    ol{margin:0;padding-left:18px;color:rgba(255,255,255,0.88);}
+    li{padding:4px 0;color:rgba(255,255,255,0.88);}
+
+    .note{margin-top:12px;color:rgba(255,255,255,0.55);font-size:12px;line-height:1.45;}
+  </style>
 </head>
 <body>
-  <p>This file was generated. Please replace with the full content provided earlier if needed.</p>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1 id="title">MSc Marketing Coffee Chat</h1>
+        <p class="desc" id="desc">Loading…</p>
+      </div>
+      <a class="btn" href="settings.html">⚙️ Settings</a>
+    </div>
+
+    <div class="card" id="mainCard">
+      <p class="desc">Loading…</p>
+    </div>
+
+    <p class="note" id="privacyNote"></p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getFirestore, doc, getDoc, setDoc, collection, addDoc,
+      serverTimestamp, onSnapshot, query, orderBy
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjJHNF1R4eSQDwlkqd4cVO28LKmCuZSn-g",
+      authDomain: "msc-marketing-social-meetups.firebaseapp.com",
+      projectId: "msc-marketing-social-meetups",
+      storageBucket: "msc-marketing-social-meetups.firebasestorage.app",
+      messagingSenderId: "135355751558",
+      appId: "1:135355751558:web:b7672d10b800e9bf9a0507"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    function defaultConfig(){
+      return {
+        title: "MSc Marketing Coffee Chat",
+        description: "A friendly coffee chat to meet people from the MSc Marketing course.",
+        mode: "collect",
+        responsesOpen: true,
+        groupSize: 6,
+        location: "",
+        date: "",
+        startTime: ""
+      };
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function setMessage(el, text, type){
+      el.textContent = text;
+      el.className = "message " + (type || "");
+    }
+
+    function normaliseName(name){
+      if (!name) return "";
+      name = String(name).trim();
+      name = name.replace(/\s+/g, " ");
+      if (name.length > 60) name = name.slice(0, 60);
+      return name;
+    }
+
+    function renderMeetUpDetails(cfg){
+      const loc = cfg.location ? cfg.location : "TBC";
+      const date = cfg.date ? cfg.date : "TBC";
+      const time = cfg.startTime ? cfg.startTime : "TBC";
+      const size = String(cfg.groupSize || 6);
+
+      return `
+        <p class="sectionTitle" style="margin-top:16px;">Meet up details</p>
+        <div class="pillGrid">
+          <div class="pill">📍 <strong>${escapeHtml(loc)}</strong></div>
+          <div class="pill">🗓️ <strong>${escapeHtml(date)}</strong></div>
+          <div class="pill">⏰ <strong>${escapeHtml(time)}</strong></div>
+          <div class="pill">👥 <strong>${escapeHtml(size)}</strong></div>
+        </div>
+      `;
+    }
+
+    let lastSubmittedName = "";
+    let isSubmitting = false;
+
+    function renderCollectMode(cfg){
+      const card = document.getElementById("mainCard");
+      card.innerHTML = `
+        <p class="sectionTitle">Add your name</p>
+        <label for="nameInput">Name</label>
+        <input id="nameInput" placeholder="Type your name" autocomplete="name" />
+        <button class="btn primary" id="submitBtn">Submit</button>
+        <p class="message" id="msg"></p>
+        ${renderMeetUpDetails(cfg)}
+      `;
+
+      const msgEl = document.getElementById("msg");
+      const input = document.getElementById("nameInput");
+      const btn = document.getElementById("submitBtn");
+
+      function setBusy(busy){
+        isSubmitting = busy;
+        if (busy){
+          btn.classList.add("disabled");
+          btn.textContent = "Saving…";
+          input.setAttribute("disabled","true");
+        } else {
+          btn.classList.remove("disabled");
+          btn.textContent = "Submit";
+          input.removeAttribute("disabled");
+        }
+      }
+
+      if (!cfg.responsesOpen){
+        btn.classList.add("disabled");
+        input.setAttribute("disabled","true");
+        setMessage(msgEl, "Responses are closed.", "bad");
+      }
+
+      async function submit(){
+        if (!cfg.responsesOpen){
+          setMessage(msgEl, "Responses are closed.", "bad");
+          return;
+        }
+
+        if (isSubmitting) return;
+
+        const name = normaliseName(input.value);
+        if (!name){
+          setMessage(msgEl, "Please enter your name.", "bad");
+          return;
+        }
+
+        if (name.toLowerCase() === lastSubmittedName.toLowerCase()){
+          setMessage(msgEl, "That name was just submitted. Try a different name.", "bad");
+          return;
+        }
+
+        try{
+          setBusy(true);
+          await addDoc(collection(db, "signups"), {
+            name,
+            createdAt: serverTimestamp()
+          });
+          lastSubmittedName = name;
+          input.value = "";
+          setMessage(msgEl, "Saved. Thank you.", "ok");
+        }catch(e){
+          setMessage(msgEl, "Could not save. Check your internet and try again.", "bad");
+        }finally{
+          setBusy(false);
+        }
+      }
+
+      btn.addEventListener("click", submit);
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter"){
+          e.preventDefault();
+          submit();
+        }
+      });
+    }
+
+    function renderDisplayMode(cfg, groups){
+      const card = document.getElementById("mainCard");
+
+      let html = `
+        ${renderMeetUpDetails(cfg)}
+        <p class="sectionTitle" style="margin-top:16px;">Groups</p>
+      `;
+
+      if (!groups.length){
+        html += `<p class="desc">No groups have been created yet.</p>`;
+      } else {
+        html += `<div class="groups">`;
+        for (const g of groups){
+          const members = Array.isArray(g.members) ? g.members : [];
+          html += `
+            <div class="groupCard">
+              <div class="groupHead">
+                <strong>Group ${escapeHtml(g.groupNumber)}</strong>
+                <span class="count">${members.length} people</span>
+              </div>
+              <ol>
+                ${members.map(m => `<li>${escapeHtml(m)}</li>`).join("")}
+              </ol>
+            </div>
+          `;
+        }
+        html += `</div>`;
+      }
+
+      card.innerHTML = html;
+    }
+
+    async function ensureConfigExists(){
+      const ref = doc(db, "config", "main");
+      const snap = await getDoc(ref);
+      if (snap.exists()) return;
+      await setDoc(ref, defaultConfig(), { merge: true });
+    }
+
+    function applyHeader(cfg){
+      document.getElementById("title").textContent = cfg.title || "MSc Marketing Coffee Chat";
+      document.getElementById("desc").textContent = cfg.description || "";
+      document.getElementById("privacyNote").textContent =
+        "By signing up, you agree your name can be shown in groups on this page.";
+    }
+
+    let latestCfg = defaultConfig();
+    let latestGroups = [];
+
+    function renderFromState(){
+      applyHeader(latestCfg);
+      if (latestCfg.mode === "display"){
+        renderDisplayMode(latestCfg, latestGroups);
+      } else {
+        renderCollectMode(latestCfg);
+      }
+    }
+
+    async function start(){
+      try{
+        await ensureConfigExists();
+      }catch(e){
+        document.getElementById("desc").textContent = "Could not load Firebase. Check your internet.";
+        document.getElementById("mainCard").innerHTML = `<p class="desc">Firebase is not available right now.</p>`;
+        return;
+      }
+
+      onSnapshot(doc(db, "config", "main"), (snap) => {
+        if (snap.exists()){
+          latestCfg = { ...defaultConfig(), ...snap.data() };
+          renderFromState();
+        }
+      }, () => {
+        document.getElementById("desc").textContent = "Could not load settings. Try again.";
+      });
+
+      const q = query(collection(db, "groups"), orderBy("groupNumber"));
+      onSnapshot(q, (snap) => {
+        latestGroups = snap.docs.map(d => d.data());
+        if (latestCfg.mode === "display"){
+          renderFromState();
+        }
+      });
+    }
+
+    start();
+  </script>
 </body>
 </html>
