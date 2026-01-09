@@ -1,5 +1,611 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8" /><title>Settings</title></head>
-<body><p>This file was generated. Please replace with the full content provided earlier if needed.</p></body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Settings</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:rgba(255,255,255,0.08);
+      --card2:rgba(255,255,255,0.06);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.72);
+      --line:rgba(255,255,255,0.14);
+      --btn:rgba(255,255,255,0.14);
+      --btn2:rgba(255,255,255,0.10);
+      --good:#7CFFB2;
+      --bad:#FF8A8A;
+      --shadow:0 20px 60px rgba(0,0,0,0.45);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box;}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 600px at 20% 10%, rgba(120,120,255,0.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 25%, rgba(0,255,210,0.18), transparent 60%),
+        radial-gradient(900px 700px at 45% 100%, rgba(255,170,80,0.14), transparent 55%),
+        var(--bg);
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .wrap{width:100%;max-width:1040px;}
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    h1{margin:0;font-size:24px;}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--btn2);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:14px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      user-select:none;
+      transition:transform 0.08s ease, background 0.12s ease;
+      white-space:nowrap;
+      justify-content:center;
+    }
+
+    .btn:active{transform:scale(0.99);}
+    .btn:hover{background:var(--btn);}
+
+    .primary{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.22);}
+    .danger{background:rgba(255,120,120,0.16);border:1px solid rgba(255,120,120,0.25);}
+
+    .disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+      pointer-events:none;
+    }
+
+    .card{
+      background:linear-gradient(180deg,var(--card),var(--card2));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:var(--shadow);
+    }
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    @media (max-width:980px){.grid{grid-template-columns:1fr;}}
+
+    .sectionTitle{margin:0 0 10px 0;font-size:16px;color:rgba(255,255,255,0.88);}
+
+    label{font-size:13px;color:var(--muted);display:block;margin-top:10px;margin-bottom:6px;}
+
+    input, select, textarea{
+      width:100%;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.08);
+      color:var(--text);
+      padding:12px 12px;
+      border-radius:12px;
+      font-size:14px;
+      outline:none;
+    }
+
+    textarea{min-height:78px;resize:vertical;}
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media (max-width:560px){.row{grid-template-columns:1fr;}}
+
+    .btnRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+    @media (max-width:560px){.btnRow{grid-template-columns:1fr;}}
+
+    .message{margin-top:10px;font-size:13px;color:var(--muted);min-height:18px;}
+    .message.ok{color:var(--good);}
+    .message.bad{color:var(--bad);}
+
+    .namesBox{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.06);
+      border-radius:16px;
+      padding:10px;
+      max-height:260px;
+      overflow:auto;
+    }
+
+    .groupsBox{
+      margin-top:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.06);
+      border-radius:16px;
+      padding:10px;
+      max-height:320px;
+      overflow:auto;
+    }
+
+    .groupCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,0.07);
+      border-radius:14px;
+      padding:10px;
+      margin-bottom:10px;
+    }
+
+    .groupCard:last-child{margin-bottom:0;}
+
+    .groupHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .groupHead strong{font-size:14px;}
+    .count{font-size:12px;color:var(--muted);}
+
+    ol{margin:0;padding-left:18px;color:rgba(255,255,255,0.88);}
+    li{padding:4px 0;color:rgba(255,255,255,0.88);}
+
+    .hint{margin-top:10px;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;}
+
+    .lock{max-width:520px;margin:0 auto;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <h1>Settings</h1>
+      <a class="btn" href="index.html">⬅️ Back</a>
+    </div>
+
+    <div class="card lock" id="lockCard">
+      <p class="sectionTitle">Organiser password</p>
+
+      <label for="pw">Password</label>
+      <input id="pw" type="password" placeholder="Enter password" />
+
+      <div class="btnRow" style="grid-template-columns:1fr;">
+        <button class="btn primary" id="unlockBtn">Unlock</button>
+      </div>
+
+      <p class="message" id="lockMsg"></p>
+
+      <p class="hint">
+        This is a simple password check inside the page.
+        It is not secure.
+      </p>
+    </div>
+
+    <div class="grid" id="adminArea" style="display:none;">
+      <div class="card">
+        <p class="sectionTitle">Home page settings</p>
+
+        <label for="title">Title</label>
+        <input id="title" placeholder="MSc Marketing Coffee Chat" />
+
+        <label for="description">Description</label>
+        <textarea id="description" placeholder="Short description for the home page"></textarea>
+
+        <label for="mode">Home page mode</label>
+        <select id="mode">
+          <option value="collect">Name collector</option>
+          <option value="display">Event display</option>
+        </select>
+
+        <label for="responsesOpen">Responses</label>
+        <select id="responsesOpen">
+          <option value="true">Open</option>
+          <option value="false">Closed</option>
+        </select>
+
+        <label for="groupSize">Group size</label>
+        <input id="groupSize" type="number" min="2" max="20" value="6" />
+
+        <label for="location">Location</label>
+        <input id="location" placeholder="For example, Café in the main building" />
+
+        <div class="row">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" type="date" />
+          </div>
+          <div>
+            <label for="startTime">Start time</label>
+            <input id="startTime" type="time" />
+          </div>
+        </div>
+
+        <div class="btnRow" style="grid-template-columns:1fr;">
+          <button class="btn primary" id="saveBtn">Save</button>
+        </div>
+
+        <p class="message" id="cfgMsg"></p>
+
+        <div class="btnRow">
+          <button class="btn" id="lockBtn">Lock</button>
+          <button class="btn danger" id="resetBtn">Reset</button>
+        </div>
+
+        <p class="hint">
+          Save updates the home page.
+          Randomise creates groups in the other panel.
+          Reset deletes all names and groups and resets settings.
+        </p>
+      </div>
+
+      <div class="card">
+        <p class="sectionTitle">Names and groups</p>
+
+        <div class="btnRow">
+          <button class="btn" id="refreshBtn">Refresh</button>
+          <button class="btn primary" id="randomiseBtn">Randomise</button>
+        </div>
+
+        <label style="margin-top:12px;">Names collected</label>
+        <div class="namesBox" id="namesBox"></div>
+
+        <label style="margin-top:12px;">Groups preview</label>
+        <div class="groupsBox" id="groupsBox"></div>
+
+        <p class="message" id="dataMsg"></p>
+
+        <p class="hint">
+          Groups are saved to Firestore when you randomise.
+          Set mode to event display to show them on the home page.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getFirestore, doc, getDoc, setDoc, collection, getDocs, query, orderBy,
+      writeBatch, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAjJHNF1R4eSQDwlkqd4cVO28LKmCuZSn-g",
+      authDomain: "msc-marketing-social-meetups.firebaseapp.com",
+      projectId: "msc-marketing-social-meetups",
+      storageBucket: "msc-marketing-social-meetups.firebasestorage.app",
+      messagingSenderId: "135355751558",
+      appId: "1:135355751558:web:b7672d10b800e9bf9a0507"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const ADMIN_PASSWORD = "1111";
+
+    function defaultConfig(){
+      return {
+        title: "MSc Marketing Coffee Chat",
+        description: "A friendly coffee chat to meet people from the MSc Marketing course.",
+        mode: "collect",
+        responsesOpen: true,
+        groupSize: 6,
+        location: "",
+        date: "",
+        startTime: ""
+      };
+    }
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function setMessage(el, text, type){
+      el.textContent = text;
+      el.className = "message " + (type || "");
+    }
+
+    function showAdmin(show){
+      document.getElementById("lockCard").style.display = show ? "none" : "block";
+      document.getElementById("adminArea").style.display = show ? "grid" : "none";
+    }
+
+    function readForm(){
+      return {
+        title: document.getElementById("title").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        mode: document.getElementById("mode").value,
+        responsesOpen: document.getElementById("responsesOpen").value === "true",
+        groupSize: Number(document.getElementById("groupSize").value),
+        location: document.getElementById("location").value.trim(),
+        date: document.getElementById("date").value,
+        startTime: document.getElementById("startTime").value
+      };
+    }
+
+    function validateForm(v){
+      if (!v.title) return "Title is required.";
+      if (v.title.length > 60) return "Title is too long.";
+      if (v.description.length > 240) return "Description is too long.";
+      if (!["collect","display"].includes(v.mode)) return "Invalid mode.";
+      if (!v.groupSize || v.groupSize < 2 || v.groupSize > 20) return "Group size must be 2 to 20.";
+      if (v.location.length > 80) return "Location is too long.";
+      return "";
+    }
+
+    async function ensureConfigExists(){
+      const ref = doc(db, "config", "main");
+      const snap = await getDoc(ref);
+      if (snap.exists()) return;
+      await setDoc(ref, defaultConfig(), { merge: true });
+    }
+
+    async function loadConfig(){
+      const ref = doc(db, "config", "main");
+      const snap = await getDoc(ref);
+      if (!snap.exists()) return defaultConfig();
+      return { ...defaultConfig(), ...snap.data() };
+    }
+
+    function fillForm(cfg){
+      document.getElementById("title").value = cfg.title || "";
+      document.getElementById("description").value = cfg.description || "";
+      document.getElementById("mode").value = cfg.mode || "collect";
+      document.getElementById("responsesOpen").value = String(!!cfg.responsesOpen);
+      document.getElementById("groupSize").value = cfg.groupSize || 6;
+      document.getElementById("location").value = cfg.location || "";
+      document.getElementById("date").value = cfg.date || "";
+      document.getElementById("startTime").value = cfg.startTime || "";
+    }
+
+    async function renderNames(){
+      const box = document.getElementById("namesBox");
+      const q = query(collection(db, "signups"), orderBy("createdAt"));
+      const snap = await getDocs(q);
+
+      if (snap.empty){
+        box.innerHTML = `<p style="margin:0;color:rgba(255,255,255,0.7);">No names yet.</p>`;
+        return;
+      }
+
+      const items = snap.docs
+        .map(d => d.data().name)
+        .filter(Boolean)
+        .map(n => `<li>${escapeHtml(n)}</li>`)
+        .join("");
+
+      box.innerHTML = `<ol>${items}</ol>`;
+    }
+
+    async function renderGroupsPreview(){
+      const box = document.getElementById("groupsBox");
+      const q = query(collection(db, "groups"), orderBy("groupNumber"));
+      const snap = await getDocs(q);
+
+      if (snap.empty){
+        box.innerHTML = `<p style="margin:0;color:rgba(255,255,255,0.7);">No groups yet. Click randomise.</p>`;
+        return;
+      }
+
+      const html = snap.docs.map(d => d.data()).map(g => {
+        const members = Array.isArray(g.members) ? g.members : [];
+        return `
+          <div class="groupCard">
+            <div class="groupHead">
+              <strong>Group ${escapeHtml(g.groupNumber)}</strong>
+              <span class="count">${members.length} people</span>
+            </div>
+            <ol>
+              ${members.map(m => `<li>${escapeHtml(m)}</li>`).join("")}
+            </ol>
+          </div>
+        `;
+      }).join("");
+
+      box.innerHTML = html;
+    }
+
+    function shuffleArray(arr){
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function chunk(arr, size){
+      const out = [];
+      for (let i = 0; i < arr.length; i += size){
+        out.push(arr.slice(i, i + size));
+      }
+      return out;
+    }
+
+    async function randomiseGroups(){
+      const form = readForm();
+      const err = validateForm(form);
+      if (err) return { ok:false, error:err };
+
+      const qNames = query(collection(db, "signups"), orderBy("createdAt"));
+      const namesSnap = await getDocs(qNames);
+      const names = namesSnap.docs.map(d => d.data().name).filter(Boolean);
+
+      if (!names.length) return { ok:false, error:"No names to randomise." };
+
+      const shuffled = shuffleArray(names);
+      const chunks = chunk(shuffled, form.groupSize);
+      const batch = writeBatch(db);
+
+      const oldGroups = await getDocs(collection(db, "groups"));
+      oldGroups.forEach(d => batch.delete(d.ref));
+
+      chunks.forEach((members, idx) => {
+        const ref = doc(collection(db, "groups"));
+        batch.set(ref, {
+          groupNumber: idx + 1,
+          members,
+          createdAt: serverTimestamp()
+        });
+      });
+
+      await batch.commit();
+      return { ok:true, count:chunks.length };
+    }
+
+    async function resetAll(){
+      const batch = writeBatch(db);
+
+      const signups = await getDocs(collection(db, "signups"));
+      signups.forEach(d => batch.delete(d.ref));
+
+      const groups = await getDocs(collection(db, "groups"));
+      groups.forEach(d => batch.delete(d.ref));
+
+      batch.set(doc(db, "config", "main"), { ...defaultConfig() }, { merge:true });
+
+      await batch.commit();
+    }
+
+    function lockNow(){
+      showAdmin(false);
+      document.getElementById("pw").value = "";
+      setMessage(document.getElementById("lockMsg"), "", "");
+      setMessage(document.getElementById("cfgMsg"), "", "");
+      setMessage(document.getElementById("dataMsg"), "", "");
+    }
+
+    document.getElementById("unlockBtn").addEventListener("click", async () => {
+      const pw = document.getElementById("pw").value;
+      const msg = document.getElementById("lockMsg");
+
+      if (pw !== ADMIN_PASSWORD){
+        setMessage(msg, "Wrong password.", "bad");
+        return;
+      }
+
+      try{
+        await ensureConfigExists();
+        const cfg = await loadConfig();
+        fillForm(cfg);
+        await renderNames();
+        await renderGroupsPreview();
+        setMessage(msg, "Unlocked.", "ok");
+        showAdmin(true);
+      }catch(e){
+        setMessage(msg, "Could not load Firebase. Try again.", "bad");
+      }
+    });
+
+    document.getElementById("lockBtn").addEventListener("click", () => {
+      lockNow();
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", async () => {
+      const cfgMsg = document.getElementById("cfgMsg");
+      const form = readForm();
+      const err = validateForm(form);
+      if (err){
+        setMessage(cfgMsg, err, "bad");
+        return;
+      }
+
+      try{
+        await setDoc(doc(db, "config", "main"), form, { merge:true });
+        setMessage(cfgMsg, "Saved. Home page is updated.", "ok");
+      }catch(e){
+        setMessage(cfgMsg, "Could not save. Try again.", "bad");
+      }
+    });
+
+    document.getElementById("refreshBtn").addEventListener("click", async () => {
+      await renderNames();
+      await renderGroupsPreview();
+      setMessage(document.getElementById("dataMsg"), "Refreshed.", "ok");
+    });
+
+    document.getElementById("randomiseBtn").addEventListener("click", async () => {
+      const msg = document.getElementById("dataMsg");
+      const btn = document.getElementById("randomiseBtn");
+      if (btn.classList.contains("disabled")) return;
+
+      btn.classList.add("disabled");
+      const oldText = btn.textContent;
+      btn.textContent = "Working…";
+
+      try{
+        const res = await randomiseGroups();
+        if (!res.ok){
+          setMessage(msg, res.error, "bad");
+        } else {
+          await renderGroupsPreview();
+          setMessage(msg, `Created ${res.count} groups.`, "ok");
+        }
+      }catch(e){
+        setMessage(msg, "Could not randomise. Try again.", "bad");
+      }finally{
+        btn.classList.remove("disabled");
+        btn.textContent = oldText;
+      }
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", async () => {
+      const pw = prompt("Enter organiser password to reset");
+      if (pw === null) return;
+
+      if (pw !== ADMIN_PASSWORD){
+        setMessage(document.getElementById("cfgMsg"), "Wrong password. Reset cancelled.", "bad");
+        return;
+      }
+
+      const ok = confirm("This will delete all names and groups. Continue?");
+      if (!ok) return;
+
+      const btn = document.getElementById("resetBtn");
+      btn.classList.add("disabled");
+      const oldText = btn.textContent;
+      btn.textContent = "Working…";
+
+      try{
+        await resetAll();
+        const cfg = await loadConfig();
+        fillForm(cfg);
+        await renderNames();
+        await renderGroupsPreview();
+        setMessage(document.getElementById("cfgMsg"), "Reset done.", "ok");
+        setMessage(document.getElementById("dataMsg"), "All names and groups deleted.", "ok");
+      }catch(e){
+        setMessage(document.getElementById("cfgMsg"), "Reset failed. Try again.", "bad");
+      }finally{
+        btn.classList.remove("disabled");
+        btn.textContent = oldText;
+      }
+    });
+
+    window.addEventListener("pagehide", () => {
+      lockNow();
+    });
+
+    window.addEventListener("beforeunload", () => {
+      lockNow();
+    });
+
+    lockNow();
+  </script>
+</body>
 </html>
